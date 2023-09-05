@@ -1,12 +1,16 @@
 import { styled } from 'styled-components';
 
-export const InputWrapper = styled.div`
+interface InputWrapperProps {
+  $outline: boolean;
+}
+
+export const InputWrapper = styled.div<InputWrapperProps>`
   background-color: #fff;
   border-radius: 42px;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  outline: ${(props) => (props.$outline ? '2px solid #1976d2' : 'none')};
   /* & input:focus {
     outline: 2px solid #1976d2;
   } */
