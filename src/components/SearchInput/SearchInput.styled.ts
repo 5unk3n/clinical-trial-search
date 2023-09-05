@@ -11,9 +11,6 @@ export const InputWrapper = styled.div<InputWrapperProps>`
   justify-content: center;
   align-items: center;
   outline: ${(props) => (props.$outline ? '2px solid #1976d2' : 'none')};
-  /* & input:focus {
-    outline: 2px solid #1976d2;
-  } */
 `;
 
 export const Input = styled.input`
