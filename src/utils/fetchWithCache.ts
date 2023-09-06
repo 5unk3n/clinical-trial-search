@@ -1,12 +1,14 @@
 const cache = new Map<string, { data: any; expireTime: number }>();
 const CACHE_DURATION = 1000 * 60 * 5;
 
-interface fetchWithCacheProps<T> {
-  apiFunction: () => Promise<T>;
+interface fetchWithCacheProps<T extends (...args: any[]) => Promise<any>> {
+  apiFunction: T;
   cacheKey: string;
 }
 
-export const fetchWithCache = async <T>({
+export const fetchWithCache = async <
+  T extends (...args: any[]) => Promise<any>
+>({
   apiFunction,
   cacheKey,
 }: fetchWithCacheProps<T>) => {
@@ -17,14 +19,14 @@ export const fetchWithCache = async <T>({
     const currentTime = new Date().getTime();
 
     if (currentTime < expireTime) {
-      return Promise.resolve<T>(data);
+      return Promise.resolve<ReturnType<typeof apiFunction>>(data);
     }
   }
 
-  const data = await apiFunction();
+  const data = await apiFunction(cacheKey);
   cache.set(cacheKey, {
     data,
     expireTime: new Date().getTime() + CACHE_DURATION,
   });
-  return data;
+  return data as ReturnType<typeof apiFunction>;
 };

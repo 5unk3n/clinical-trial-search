@@ -42,7 +42,7 @@ const SearchMain = () => {
       }
 
       const result = await fetchWithCache({
-        apiFunction: () => getSearchSuggestions(searchWord),
+        apiFunction: getSearchSuggestions,
         cacheKey: searchWord,
       });
       setSuggestions(result);
