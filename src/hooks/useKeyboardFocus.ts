@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-// FIXME: 열렸을 때 자동으로 포커스되는 문제와 0번 인덱스부터 시작되지 않는 문제 수정해야함
+// FIXME: 열렸을 때 자동으로 포커스되는 문제 수정
 const useKeyboardFocus = (itemCount: number) => {
-  const [focusIndex, setFocusIndex] = useState(0);
+  const [focusIndex, setFocusIndex] = useState(-1);
   const focusItemRefs = useRef<HTMLElement[]>([]);
 
   useEffect(() => {

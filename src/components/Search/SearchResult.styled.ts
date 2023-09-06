@@ -35,3 +35,10 @@ export const SuggestionItem = styled.a`
 export const SuggestionItemIcon = styled.span`
   margin-right: 16px;
 `;
+
+export const SuggestionEmptyText = styled.div`
+  padding-left: 16px;
+  color: #007bff;
+  font-size: 20px;
+  font-weight: bold;
+`;
