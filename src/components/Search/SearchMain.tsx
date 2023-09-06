@@ -4,6 +4,7 @@ import SearchList from './SearchList';
 import SearchInput from './SearchInput';
 import { SuggestionType } from '../../types';
 import { getSearchSuggestions } from '../../apis/sick';
+import { fetchWithCache } from '../../utils/fetchWithCache';
 
 const SearchMain = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,10 @@ const SearchMain = () => {
       return;
     }
 
-    const result = await getSearchSuggestions(searchWord);
+    const result = await fetchWithCache({
+      apiFunction: () => getSearchSuggestions(searchWord),
+      cacheKey: searchWord,
+    });
     setSuggestions(result);
   }, []);
 
