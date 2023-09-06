@@ -6,6 +6,11 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   ul {
     padding: 0;
     list-style: none;

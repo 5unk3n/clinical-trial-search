@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import SearchList from './SearchList';
 import SearchInput from './SearchInput';
@@ -6,16 +6,29 @@ import { SuggestionType } from '../../types';
 import { getSearchSuggestions } from '../../apis/sick';
 
 const SearchMain = () => {
-  const [isFocus, setIsFocus] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<SuggestionType[]>([]);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const handleFoucs = () => {
-    setIsFocus(true);
+  const openSuggestions = () => {
+    setIsOpen(true);
   };
 
-  const handleBlur = () => {
-    setIsFocus(false);
-  };
+  useEffect(() => {
+    const closeSuggestions = (e: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', closeSuggestions);
+    return () => {
+      document.removeEventListener('mousedown', closeSuggestions);
+    };
+  }, []);
 
   const handleSearch = useCallback(async (searchWord: string) => {
     if (searchWord === '') {
@@ -28,14 +41,13 @@ const SearchMain = () => {
   }, []);
 
   return (
-    <div>
+    <div ref={wrapperRef}>
       <SearchInput
-        isFocus={isFocus}
-        handleFoucs={handleFoucs}
-        handleBlur={handleBlur}
+        isOpen={isOpen}
+        openSuggestions={openSuggestions}
         handleSearch={handleSearch}
       />
-      {isFocus && <SearchList suggestions={suggestions} />}
+      {isOpen && <SearchList suggestions={suggestions} />}
     </div>
   );
 };

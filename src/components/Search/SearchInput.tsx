@@ -6,16 +6,14 @@ import SearchIcon from '../Icon/SearchIcon';
 import * as S from './SearchInput.styled';
 
 interface SearchInputProps {
-  isFocus: boolean;
-  handleFoucs: () => void;
-  handleBlur: () => void;
+  isOpen: boolean;
+  openSuggestions: () => void;
   handleSearch: (debouncedSearchWord: string) => void;
 }
 
 const SearchInput = ({
-  isFocus,
-  handleFoucs,
-  handleBlur,
+  isOpen,
+  openSuggestions,
   handleSearch,
 }: SearchInputProps) => {
   const [searchWord, setSearchWord] = useState('');
@@ -26,21 +24,18 @@ const SearchInput = ({
   }, [debouncedSearchWord, handleSearch]);
 
   return (
-    <div>
-      <S.InputWrapper $outline={isFocus}>
-        <S.Input
-          type='text'
-          value={searchWord}
-          onChange={(e) => setSearchWord(e.target.value)}
-          placeholder='질환명을 입력해 주세요.'
-          onFocus={handleFoucs}
-          onBlur={handleBlur}
-        />
-        <S.SearchButton type='button'>
-          <SearchIcon />
-        </S.SearchButton>
-      </S.InputWrapper>
-    </div>
+    <S.InputWrapper $outline={isOpen}>
+      <S.Input
+        type='text'
+        value={searchWord}
+        onChange={(e) => setSearchWord(e.target.value)}
+        placeholder='질환명을 입력해 주세요.'
+        onFocus={openSuggestions}
+      />
+      <S.SearchButton type='button'>
+        <SearchIcon />
+      </S.SearchButton>
+    </S.InputWrapper>
   );
 };
 
