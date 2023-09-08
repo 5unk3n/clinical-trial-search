@@ -22,8 +22,11 @@
 
 ```shell
 git clone https://github.com/5unk3n/clinical-trial-search.git
+
 npm install
-npm start
+
+# 리액트 앱과 json-server를 함께 실행합니다.
+npm run dev
 ```
 
 ## 디렉토리 구조
