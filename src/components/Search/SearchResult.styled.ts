@@ -16,7 +16,6 @@ export const SuggestionTitle = styled.div`
 
 export const SuggestionItem = styled.a`
   font-size: 24px;
-  font-weight: bold;
   padding: 12px 16px;
   text-align: left;
   display: block;
